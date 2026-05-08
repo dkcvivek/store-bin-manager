@@ -50,6 +50,11 @@ export default function BinDetailsPage() {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-zip-lock/${String(binNo).replace("bin-", "")}/`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "1",
+            },
+          },
         );
 
         if (!res.ok) {
@@ -83,6 +88,9 @@ export default function BinDetailsPage() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/create-zip-lock/${String(binNo).replace("bin-", "")}/`,
         {
           method: "POST",
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+          },
           body: formData,
         },
       );
@@ -99,6 +107,11 @@ export default function BinDetailsPage() {
 
       const updatedRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-zip-lock/${String(binNo).replace("bin-", "")}/`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+          },
+        },
       );
 
       const updatedData = await updatedRes.json();

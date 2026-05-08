@@ -16,7 +16,8 @@ export default function BinScreen() {
     const fetchBins = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-bin`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-bin/`,
+          { headers: { "ngrok-skip-browser-warning": "1" } },
         );
 
         if (!res.ok) {
@@ -46,7 +47,9 @@ export default function BinScreen() {
               onClick={() => router.push(`/bin-${bin.bin_id}`)}
               className="w-full min-h-18 border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 shadow-sm px-4 flex items-center active:scale-[0.98] transition"
             >
-              <span className="text-lg font-semibold">Bin - {bin.bin_number}</span>
+              <span className="text-lg font-semibold">
+                Bin - {bin.bin_number}
+              </span>
             </button>
           ))}
         </div>

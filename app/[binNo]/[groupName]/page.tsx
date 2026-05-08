@@ -7,6 +7,8 @@ import TitleBar from "@/components/TitleBar";
 type MessageImage = {
   item_id: number;
   item_photo: string;
+  created_at: string;
+  updated_at: string;
 };
 
 type ItemResponse = {
@@ -49,6 +51,8 @@ export default function GroupChatPage() {
         {
           item_id: tempId,
           item_photo: imageUrl,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         },
         ...prev,
       ]);
@@ -61,6 +65,9 @@ export default function GroupChatPage() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/create-item/${zipId}/`,
         {
           method: "POST",
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+          },
           body: formData,
         },
       );
@@ -72,6 +79,11 @@ export default function GroupChatPage() {
       // REFRESH ITEMS
       const updatedRes = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-item/${zipId}/`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+          },
+        },
       );
 
       if (!updatedRes.ok) {
@@ -97,6 +109,11 @@ export default function GroupChatPage() {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/list-item/${zipId}/`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "1",
+            },
+          },
         );
 
         if (!res.ok) {
@@ -150,6 +167,15 @@ export default function GroupChatPage() {
                   setShowPreview(true);
                 }}
               />
+            </div>
+
+            <div className="mt-1 px-1 text-xs text-right text-zinc-500">
+              {new Date(msg.created_at).toLocaleString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </div>
           </div>
         ))}
