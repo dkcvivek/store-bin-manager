@@ -21,6 +21,8 @@ export default function BinDetailsPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [zips, setZips] = useState<ZipLock[]>([]);
 
+  const [disabledSaveBtn, setDisabledSaveBtn] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleAddGroup = () => {
@@ -79,6 +81,7 @@ export default function BinDetailsPage() {
       if (!selectedFile) {
         return;
       }
+      setDisabledSaveBtn(true);
 
       const formData = new FormData();
 
@@ -119,6 +122,8 @@ export default function BinDetailsPage() {
       setZips(updatedData);
     } catch (e) {
       console.error(e);
+    } finally {
+      setDisabledSaveBtn(false);
     }
   };
 
@@ -197,6 +202,7 @@ export default function BinDetailsPage() {
 
               <button
                 className="flex-1 h-12 bg-foreground text-background font-semibold"
+                disabled={disabledSaveBtn}
                 onClick={handleSave}
               >
                 Save

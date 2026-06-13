@@ -114,7 +114,7 @@ export default function GroupChatPage() {
               "ngrok-skip-browser-warning": "1",
             },
           },
-        );
+        );  
 
         if (!res.ok) {
           throw new Error("List Items API Failed");
